@@ -64,8 +64,8 @@ public class SearchTests extends CoreTestCase {
     }
 
     /*
-    Ex12*: Рефакторинг тестов
-    Адаптировать по iOS тест на поиск и верификацию трех результатов выдачи поиска.
+    Ex18*: Рефакторинг
+    Адаптировать по MW тест на поиск и верификацию трех результатов выдачи поиска.
     */
     @Test
     public void testCheckResultWithTitleAndDescription() {
