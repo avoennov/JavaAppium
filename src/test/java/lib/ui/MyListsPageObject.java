@@ -47,17 +47,17 @@ abstract public class MyListsPageObject extends MainPageObject {
 
     public void waitForArticleToAppearByTitle(String article_title) {
         String article_xpath = getSavedArticleXpathByTitle(article_title);
-        this.waitForElementPresent(article_xpath, "Cannot find saved article by title" + article_title, 15);
+        this.waitForElementPresent(article_xpath, "Cannot find saved article by title " + article_title, 15);
     }
 
     public void waitForArticleToAppearByFooter(String article_footer) {
         String article_xpath = getSavedArticleXpathByTitle(article_footer);
-        this.waitForElementPresent(article_xpath, "Cannot find saved article by title" + article_footer, 15);
+        this.waitForElementPresent(article_xpath, "Cannot find saved article by title " + article_footer, 15);
     }
 
     public void waitForArticleToDisappearByTitle(String article_title) {
         String article_xpath = getSavedArticleXpathByTitle(article_title);
-        this.waitForElementNotPresent(article_xpath, "Saved article still present with title" + article_title, 15);
+        this.waitForElementNotPresent(article_xpath, "Saved article still present with title " + article_title, 15);
     }
 
     public void swipeByArticleToDelete(String article_title) throws InterruptedException {
@@ -90,13 +90,30 @@ abstract public class MyListsPageObject extends MainPageObject {
         this.waitForArticleToDisappearByTitle(article_title);
     }
 
-    public void swipeByArticleFooterToDelete(String article_footer) {
+    public void swipeByArticleFooterToDelete(String article_footer) throws InterruptedException {
         this.waitForArticleToAppearByTitle(article_footer);
         String article_xpath = getSavedArticleXpathByTitle(article_footer);
-        this.swipeElementToLeft(article_xpath, "Cannot find saved article");
+
+        if (Platform.getInstance().isIOS() || Platform.getInstance().isAndroid()) {
+            this.swipeElementToLeft(
+                    article_xpath,
+                    "Cannot find saved article"
+            );
+        } else {
+            String remove_locator = getRemoveButtonByTitle(article_footer);
+            this.waitForElementAndClick(
+                    remove_locator,
+                    "Cannot click button to remove article from saved",
+                    10
+            );
+            Thread.sleep(500);
+        }
 
         if (Platform.getInstance().isIOS()){
             this.waitForElementAndClick(DELETE_BUTTON, "Cannot find element", 5);
+        }
+        if (Platform.getInstance().isMW()) {
+            driver.navigate().refresh();
         }
         this.waitForArticleToDisappearByTitle(article_footer);
     }

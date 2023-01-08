@@ -15,7 +15,9 @@ public class MyListsTests extends CoreTestCase {
             name_of_folder = "Learning programming",
             search_line = "Java",
             article_footer_1 = "Object-oriented programming language",
-            article_footer_2 = "Island in Indonesia";
+            article_footer_2 = "Island in Indonesia",
+            article_title_1 = "Java (programming language)",
+            article_title_2 = "Java";
 
     @Test
     public void testSaveFirstArticleToMyList() throws InterruptedException {
@@ -53,13 +55,14 @@ public class MyListsTests extends CoreTestCase {
     }
 
     /*
-    Ex11: Рефакторинг тестов
-    Адаптировать под iOS тест на удаление одной сохраненной статьи из двух. Вместо проверки title-элемента придумать другой
+    Ex17: Рефакторинг
+    Адаптировать под MW тест на удаление одной сохраненной статьи из двух. Вместо проверки title-элемента придумать другой
     способ верификации оставшейся статьи (т.е. способ убедиться, что осталась в сохраненных ожидаемая статья).
     Результат выполнения задания нужно закоммитить в git. В качестве ответа прислать ссылку на коммит. Если вам потребовалось
     несколько коммитов для выполнения одного задания - присылайте ссылки на все эти коммиты с комментариями.*/
     @Test
     public void testSaveTwoArticlesToMyList() throws InterruptedException {
+        loginToWikiForMobileWeb();
         SearchPageObject SearchPageObject = SearchPageObjectFactory.get(driver);
         SearchPageObject.initSearchInput();
         SearchPageObject.typeSearchLine(search_line);
@@ -72,11 +75,14 @@ public class MyListsTests extends CoreTestCase {
 
         if (Platform.getInstance().isAndroid()) {
             ArticlePageObject.addArticleToMyList(name_of_folder);
-        } else {
+        } else if (Platform.getInstance().isIOS()) {
             ArticlePageObject.addArticlesToMySaved();
             ArticlePageObject.clickBackButton();
+        } else {
+            ArticlePageObject.addArticlesToMySaved();
+            SearchPageObject.initSearchInput();
+            SearchPageObject.typeSearchLine(search_line);
         }
-        ArticlePageObject.clickBackButton();
         SearchPageObject.clickByArticleWithSubstring(article_footer_2);
 
         if (Platform.getInstance().isAndroid()) {
@@ -87,6 +93,9 @@ public class MyListsTests extends CoreTestCase {
         ArticlePageObject.closeArticle();
 
         NavigationUI NavigationUI = NavigationUIFactory.get(driver);
+        if (Platform.getInstance().isMW()) {
+            NavigationUI.openNavigation();
+        }
         NavigationUI.clickMyLists();
         if (Platform.getInstance().isIOS()) {
             NavigationUI.closePopUpDialog();
@@ -96,8 +105,14 @@ public class MyListsTests extends CoreTestCase {
         if (Platform.getInstance().isAndroid()) {
             MyListsPageObject.openFolderByName(name_of_folder);
         }
-        MyListsPageObject.swipeByArticleFooterToDelete(article_footer_2);
-        Thread.sleep(500);
-        MyListsPageObject.waitForArticleToAppearByFooter(article_footer_1);
+        if (Platform.getInstance().isAndroid() || Platform.getInstance().isIOS()) {
+            MyListsPageObject.swipeByArticleFooterToDelete(article_footer_2);
+            Thread.sleep(500);
+            MyListsPageObject.waitForArticleToAppearByFooter(article_footer_1);
+        } else {
+            MyListsPageObject.swipeByArticleFooterToDelete(article_title_2);
+            Thread.sleep(500);
+            MyListsPageObject.waitForArticleToAppearByFooter(article_title_1);
+        }
     }
 }
