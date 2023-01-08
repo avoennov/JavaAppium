@@ -1,7 +1,7 @@
 package lib.ui.ios;
 
-import io.appium.java_client.AppiumDriver;
 import lib.ui.MyListsPageObject;
+import org.openqa.selenium.remote.RemoteWebDriver;
 
 public class iOSMyListsPageObject extends MyListsPageObject {
     static {
@@ -14,7 +14,7 @@ public class iOSMyListsPageObject extends MyListsPageObject {
         NO_SAVED_PAGES_YET= "id:No saved pages yet";
     }
 
-    public iOSMyListsPageObject(AppiumDriver driver) {
+    public iOSMyListsPageObject(RemoteWebDriver driver) {
         super(driver);
     }
 }

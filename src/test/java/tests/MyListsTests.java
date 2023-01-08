@@ -2,10 +2,7 @@ package tests;
 
 import lib.CoreTestCase;
 import lib.Platform;
-import lib.ui.ArticlePageObject;
-import lib.ui.MyListsPageObject;
-import lib.ui.NavigationUI;
-import lib.ui.SearchPageObject;
+import lib.ui.*;
 import lib.ui.factories.ArticlePageObjectFactory;
 import lib.ui.factories.MyListsPageObjectFactory;
 import lib.ui.factories.NavigationUIFactory;
@@ -22,6 +19,7 @@ public class MyListsTests extends CoreTestCase {
 
     @Test
     public void testSaveFirstArticleToMyList() throws InterruptedException {
+        loginToWikiForMobileWeb();
         SearchPageObject SearchPageObject = SearchPageObjectFactory.get(driver);
         SearchPageObject.initSearchInput();
         SearchPageObject.typeSearchLine(search_line);
@@ -34,13 +32,13 @@ public class MyListsTests extends CoreTestCase {
 
         if (Platform.getInstance().isAndroid()) {
             ArticlePageObject.addArticleToMyList(name_of_folder);
-            ArticlePageObject.closeArticle();
         } else {
             ArticlePageObject.addArticlesToMySaved();
-            ArticlePageObject.closeArticle();
         }
+        ArticlePageObject.closeArticle();
 
         NavigationUI NavigationUI = NavigationUIFactory.get(driver);
+        NavigationUI.openNavigation();
         NavigationUI.clickMyLists();
         if (Platform.getInstance().isIOS()) {
             NavigationUI.closePopUpDialog();

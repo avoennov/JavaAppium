@@ -1,6 +1,6 @@
 package lib.ui;
 
-import io.appium.java_client.AppiumDriver;
+import org.openqa.selenium.remote.RemoteWebDriver;
 
 abstract public class SearchPageObject extends MainPageObject {
 
@@ -8,12 +8,13 @@ abstract public class SearchPageObject extends MainPageObject {
         SEARCH_INIT_ELEMENT,
         SEARCH_INPUT,
         SEARCH_CANCEL_BUTTON,
+        SEARCH_CLEAR_BUTTON,
         SEARCH_RESULT_BY_SUBSTRING_TPL,
         SEARCH_RESULT_ELEMENT,
         SEARCH_EMPTY_RESULT_ELEMENT,
         SEARCH_RESULT_BY_TITLE_AND_DESCRIPTION_TPL;
 
-    public SearchPageObject(AppiumDriver driver) {
+    public SearchPageObject(RemoteWebDriver driver) {
         super(driver);
     }
 
@@ -42,6 +43,10 @@ abstract public class SearchPageObject extends MainPageObject {
 
     public void clickCancelSearch() {
         this.waitForElementAndClick(SEARCH_CANCEL_BUTTON, "Cannot find and click search cancel button", 5);
+    }
+
+    public void clickClearSearch() {
+        this.waitForElementAndClick(SEARCH_CLEAR_BUTTON, "Cannot find and click search clear button", 5);
     }
 
     public void typeSearchLine(String search_line) {

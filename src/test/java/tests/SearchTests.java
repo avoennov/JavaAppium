@@ -31,7 +31,11 @@ public class SearchTests extends CoreTestCase {
         SearchPageObject.initSearchInput();
         SearchPageObject.typeSearchLine("Java");
         SearchPageObject.waitForCancelButtonToAppear();
-        SearchPageObject.clickCancelSearch();
+        if (Platform.getInstance().isMW()) {
+            SearchPageObject.clickClearSearch();
+        } else {
+            SearchPageObject.clickCancelSearch();
+        }
         SearchPageObject.assertThereIsNoResultOfSearch();
     }
 
