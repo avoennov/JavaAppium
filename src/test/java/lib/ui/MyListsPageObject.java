@@ -1,5 +1,6 @@
 package lib.ui;
 
+import io.qameta.allure.Step;
 import lib.Platform;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
@@ -36,6 +37,7 @@ abstract public class MyListsPageObject extends MainPageObject {
         super(driver);
     }
 
+    @Step("Open folder '{name_of_folder}'")
     public void openFolderByName(String name_of_folder) {
         String folder_name_xpath = getSavedArticleXpathByTitle(name_of_folder);
         this.waitForElementAndClick(
@@ -45,21 +47,25 @@ abstract public class MyListsPageObject extends MainPageObject {
         );
     }
 
+    @Step("Waiting article with title '{article_title}'")
     public void waitForArticleToAppearByTitle(String article_title) {
         String article_xpath = getSavedArticleXpathByTitle(article_title);
         this.waitForElementPresent(article_xpath, "Cannot find saved article by title " + article_title, 15);
     }
 
+    @Step("Waiting article with footer '{article_footer}'")
     public void waitForArticleToAppearByFooter(String article_footer) {
         String article_xpath = getSavedArticleXpathByTitle(article_footer);
         this.waitForElementPresent(article_xpath, "Cannot find saved article by title " + article_footer, 15);
     }
 
+    @Step("Waiting article with title '{article_title}' to disappear")
     public void waitForArticleToDisappearByTitle(String article_title) {
         String article_xpath = getSavedArticleXpathByTitle(article_title);
         this.waitForElementNotPresent(article_xpath, "Saved article still present with title " + article_title, 15);
     }
 
+    @Step("Swipe article '{article_title}' to delete")
     public void swipeByArticleToDelete(String article_title) throws InterruptedException {
         this.waitForArticleToAppearByTitle(article_title);
         String article_xpath = getSavedArticleXpathByTitle(article_title);
@@ -90,6 +96,7 @@ abstract public class MyListsPageObject extends MainPageObject {
         this.waitForArticleToDisappearByTitle(article_title);
     }
 
+    @Step("Swipe article '{article_footer}' to delete")
     public void swipeByArticleFooterToDelete(String article_footer) throws InterruptedException {
         this.waitForArticleToAppearByTitle(article_footer);
         String article_xpath = getSavedArticleXpathByTitle(article_footer);
@@ -118,6 +125,7 @@ abstract public class MyListsPageObject extends MainPageObject {
         this.waitForArticleToDisappearByTitle(article_footer);
     }
 
+    @Step("Click on article '{article_title}' to delete")
     public void clickByArticleToDelete(String article_title) {
         this.waitForArticleToAppearByTitle(article_title);
         String article_xpath = getSavedArticleXpathByTitle(article_title);
@@ -126,6 +134,7 @@ abstract public class MyListsPageObject extends MainPageObject {
         this.waitForArticleToDisappearByTitle(article_title);
     }
 
+    @Step("Unsave article '{article_title}' to delete")
     public void unSaveArticle(String article_title) {
         this.waitForElementAndClick(EDIT_BUTTON, "Cannot find and click on Edit button", 5);
         String article_xpath = getSavedArticleXpathByTitle(article_title);

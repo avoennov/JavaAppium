@@ -1,5 +1,7 @@
 package tests;
 
+import io.qameta.allure.*;
+import io.qameta.allure.junit4.DisplayName;
 import lib.CoreTestCase;
 import lib.Platform;
 import lib.ui.SearchPageObject;
@@ -7,9 +9,15 @@ import lib.ui.factories.SearchPageObjectFactory;
 import org.junit.Assert;
 import org.junit.Test;
 
+@Epic("Tests for search")
 public class SearchTests extends CoreTestCase {
 
     @Test
+    @Features(value = {@Feature(value = "Search")})
+    @DisplayName("Type word in search and check results")
+    @Description("We type 'Java' in search field and check that correct article found")
+    @Step("Starting test 'testSearch()'")
+    @Severity(value = SeverityLevel.CRITICAL)
     public void testSearch() {
         SearchPageObject SearchPageObject = SearchPageObjectFactory.get(driver);
         SearchPageObject.initSearchInput();
@@ -18,6 +26,11 @@ public class SearchTests extends CoreTestCase {
     }
 
     @Test
+    @Features(value = {@Feature(value = "Search")})
+    @DisplayName("Cancel search")
+    @Description("Invoke search field and click cancel")
+    @Step("Starting test 'testCancelSearch()'")
+    @Severity(value = SeverityLevel.NORMAL)
     public void testCancelSearch() {
         SearchPageObject SearchPageObject = SearchPageObjectFactory.get(driver);
         SearchPageObject.initSearchInput();
@@ -27,6 +40,11 @@ public class SearchTests extends CoreTestCase {
     }
 
     @Test
+    @Features(value = {@Feature(value = "Search")})
+    @DisplayName("Cancel search by clear")
+    @Description("Invoke search field, type 'Java' and clear search field")
+    @Step("Starting test 'testCancelSearchWithClear()'")
+    @Severity(value = SeverityLevel.NORMAL)
     public void testCancelSearchWithClear() {
         SearchPageObject SearchPageObject = SearchPageObjectFactory.get(driver);
         SearchPageObject.initSearchInput();
@@ -41,6 +59,11 @@ public class SearchTests extends CoreTestCase {
     }
 
     @Test
+    @Features(value = {@Feature(value = "Search")})
+    @DisplayName("Any search result is present")
+    @Description("Type 'Sabaton discography' in search field and check that result of search present")
+    @Step("Starting test 'testAmountOfNotEmptySearch()'")
+    @Severity(value = SeverityLevel.NORMAL)
     public void testAmountOfNotEmptySearch() {
         SearchPageObject SearchPageObject = SearchPageObjectFactory.get(driver);
         SearchPageObject.initSearchInput();
@@ -55,6 +78,11 @@ public class SearchTests extends CoreTestCase {
     }
 
     @Test
+    @Features(value = {@Feature(value = "Search")})
+    @DisplayName("Search get empty result")
+    @Description("Type 'sfsfsfsffs' and check that search result empty")
+    @Step("Starting test 'testAmountOfEmptySearch()'")
+    @Severity(value = SeverityLevel.NORMAL)
     public void testAmountOfEmptySearch() {
         SearchPageObject SearchPageObject = SearchPageObjectFactory.get(driver);
         SearchPageObject.initSearchInput();
@@ -69,6 +97,11 @@ public class SearchTests extends CoreTestCase {
     Адаптировать по MW тест на поиск и верификацию трех результатов выдачи поиска.
     */
     @Test
+    @Features(value = {@Feature(value = "Search"), @Feature(value = "Article")})
+    @DisplayName("Get in search result 3 articles")
+    @Description("Type 'Java' in search field, check that in search result we have 3 articles")
+    @Step("Starting test 'testCheckResultWithTitleAndDescription()'")
+    @Severity(value = SeverityLevel.NORMAL)
     public void testCheckResultWithTitleAndDescription() {
         SearchPageObject SearchPageObject = SearchPageObjectFactory.get(driver);
         SearchPageObject.initSearchInput();

@@ -14,7 +14,6 @@ abstract public class ArticlePageObject extends MainPageObject {
         OPTIONS_ADD_TO_MY_LIST_BUTTON,
         OPTIONS_REMOVE_FROM_MY_LIST_BUTTON,
         LOGIN_MAIN_MENU,
-        OPTIONS_ADD_TO_MY_LIST_BUTTON_BEFORE_LOGIN,
         ADD_TO_MY_LIST_OVERLAY,
         MY_LIST_NAME_INPUT,
         MY_LIST_OK_BUTTON,
